@@ -3,7 +3,8 @@ import mimetypes
 import optparse
 import os
 
-from azure import WindowsAzureMissingResourceError
+# from azure import AzureMissingResourceHttpError
+from azure.common import AzureMissingResourceHttpError
 from azure.storage import BlobService
 
 from azurite.settings import AZURITE
@@ -62,7 +63,7 @@ class Command(BaseCommand):
 
         try:
             self.service.get_container_properties(self.STATIC_CONTAINER)
-        except WindowsAzureMissingResourceError:
+        except AzureMissingResourceHttpError:
             self.service.create_container(self.STATIC_CONTAINER,
                 x_ms_blob_public_access='blob')
 
@@ -106,7 +107,7 @@ class Command(BaseCommand):
             try:
                 properties = self.service.get_blob_properties(self.STATIC_CONTAINER,
                     object_name)
-            except WindowsAzureMissingResourceError:
+            except AzureMissingResourceHttpError:
                 properties = {}
                 self.create_count += 1
 

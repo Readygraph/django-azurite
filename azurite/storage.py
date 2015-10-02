@@ -1,7 +1,7 @@
 import datetime
 import mimetypes
 
-from azure import WindowsAzureMissingResourceError
+from azure.common import AzureMissingResourceHttpError
 from azure.storage import BlobService
 
 from azurite.settings import AZURITE
@@ -117,7 +117,7 @@ class AzureStorage(Storage):
         try:
             self._get_properties(name)
             return True
-        except WindowsAzureMissingResourceError:
+        except AzureMissingResourceHttpError:
             return False
 
     def delete(self, name):
@@ -126,7 +126,7 @@ class AzureStorage(Storage):
         """
         try:
             self._get_service().delete_blob(self.container, name)
-        except WindowsAzureMissingResourceError:
+        except AzureMissingResourceHttpError:
             pass
 
     def size(self, name):
@@ -136,7 +136,7 @@ class AzureStorage(Storage):
         try:
             properties = self._get_properties(name)
             return int(properties['content-length'])
-        except WindowsAzureMissingResourceError:
+        except AzureMissingResourceHttpError:
             pass
 
     def url(self, name):
@@ -154,7 +154,7 @@ class AzureStorage(Storage):
             properties = self._get_properties(name)
             return datetime.datetime.strptime(properties['last-modified'],
                 '%a, %d %b %Y %H:%M:%S %Z')
-        except WindowsAzureMissingResourceError:
+        except AzureMissingResourceHttpError:
             pass
 
 
