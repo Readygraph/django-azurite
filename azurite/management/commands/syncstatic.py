@@ -5,7 +5,7 @@ import os
 
 # from azure import AzureMissingResourceHttpError
 from azure.common import AzureMissingResourceHttpError
-from azure.storage import BlobService
+from azure.storage.blob import BlobService
 
 from azurite.settings import AZURITE
 

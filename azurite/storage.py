@@ -2,7 +2,7 @@ import datetime
 import mimetypes
 
 from azure.common import AzureMissingResourceHttpError
-from azure.storage import BlobService
+from azure.storage.blob import BlobService
 
 from azurite.settings import AZURITE
 
